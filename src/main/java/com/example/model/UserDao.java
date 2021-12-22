@@ -12,15 +12,32 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "user")
 public class UserDao {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    public UserDao(String string, String string2) {
-		// TODO Auto-generated constructor stub
-    	this.username=string;
-    	this.password=string2;
+    public UserDao( String username, String password) {
+		super();
+	//	this.id = id;
+		this.username = username;
+		this.password = password;
+	
 	}
-    public UserDao() {
+
+	@Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column
+    private String username;
+    @Column
+    @JsonIgnore
+    private String password;
+    private String jwttoken;
+    public String getJwttoken() {
+		return jwttoken;
+	}
+
+	public void setJwttoken(String jwttoken) {
+		this.jwttoken = jwttoken;
+	}
+
+	public UserDao() {
     	
     }
 
@@ -32,11 +49,7 @@ public class UserDao {
 		this.id = id;
 	}
 
-	@Column
-    private String username;
-    @Column
-    @JsonIgnore
-    private String password;
+	
 
     public String getUsername() {
         return username;

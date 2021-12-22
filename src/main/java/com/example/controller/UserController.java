@@ -17,7 +17,7 @@ import com.example.model.UserDao;
 import com.example.service.JwtUserDetailService;
 @Controller
 
-public class EmployeeController {
+public class UserController {
 	@Autowired
 	private JwtUserDetailService userDetailsService;
 	@Autowired
@@ -25,6 +25,10 @@ public class EmployeeController {
     @RequestMapping(value = "/greeting", method = RequestMethod.GET)
     public @ResponseBody String getEmployees() {
         return "Welcome!";
+    }
+    @GetMapping("/")
+    public String showIndexPage() {
+    	return "redirect:/index";
     }
     @GetMapping("/index")
     public String index(Model model) {
@@ -36,7 +40,7 @@ public class EmployeeController {
         model.addAttribute("id", id);
       
        model.addAttribute("command", userDetailsService.findById(id).orElse(null));
-      response.addHeader("Authorization", jwtAuthenticationController.jwtToken);
+    //  response.addHeader("Authorization", jwtAuthenticationController.jwtToken);
       
         return "updateuser";
     }

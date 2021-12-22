@@ -2,15 +2,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <h1>Login</h1>
-<form:form method="post" action="/authenticate">
+<form:form method="post" action="/authenticate" name="login">
     <table>
+  
         <tr>
             <td>Name: </td>
             <td><form:input path="username"/></td>
         </tr>
         <tr>
             <td>Password: </td>
-            <td><form:input path="password"/></td>
+            <td><form:input path="password" type="password"/></td>
         </tr>
        
         <tr>

@@ -10,11 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+
+/*
+ Checks whether request is valid or not
+ */
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint,Serializable{
 
-	/**
-	 * 
+	/*
+	 We implement serializable when we want to transfer one class object to another class
 	 */
 	private static final long serialVersionUID = 6861954344158351086L;
 

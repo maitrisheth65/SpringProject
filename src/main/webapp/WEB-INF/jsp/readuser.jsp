@@ -22,3 +22,4 @@
     </table>
 <br/>
 <a href="/index">Create User</a>
+<a href="/login">Logout</a>

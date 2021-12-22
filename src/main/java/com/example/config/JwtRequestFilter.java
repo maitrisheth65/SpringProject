@@ -37,18 +37,25 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private JwtTokenUtil jwtTokenUtil;
 	@Autowired
 	JwtAuthenticationController jwtAuthenticationController;
+	String requestTokenHeader;
 	 private static String URI = "http://localhost:8080/";
-
+	 public String finaltoken;
+	 HttpUriRequest request1;
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
-		
+		finaltoken=jwtAuthenticationController.jwtToken;
+	
 		 CloseableHttpClient client = HttpClients.custom().build();
 		  HttpUriRequest request1 = RequestBuilder.post().setUri(URI)
-		    .setHeader(HttpHeaders.AUTHORIZATION,jwtAuthenticationController.jwtToken).build();
-//		final String requestTokenHeader = request.getHeader("Authorization");
-		  final String requestTokenHeader=request1.getAllHeaders()[0].getValue();
+		    .setHeader(HttpHeaders.AUTHORIZATION,finaltoken).build();
+		
+		
+		  System.out.println("Request "+request.getRequestURI());
+//		
+		   requestTokenHeader=request1.getAllHeaders()[0].getValue();
 		System.out.println(requestTokenHeader);
+		
 		String username = null;
 		String jwtToken = null;
 		// JWT Token is in the form "Bearer token". Remove Bearer word and get only the Token

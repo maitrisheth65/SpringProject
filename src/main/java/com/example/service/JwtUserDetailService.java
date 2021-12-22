@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.controller.JwtAuthenticationController;
 import com.example.model.UserDao;
 import com.example.model.UserDto;
 import com.example.repository.UserRepository;
@@ -23,15 +24,17 @@ public class JwtUserDetailService implements UserDetailsService{
 	UserRepository userRepository;
 	@Autowired
 	PasswordEncoder passwordEncoder;
-	
+	@Autowired
+	JwtAuthenticationController jwtAuthenticationController;
     public void deleteById(long id) {
         userRepository.deleteById(id);
     }
-	public UserDao save(UserDto user) {
+	public long save(UserDto user) {
 		UserDao newUser = new UserDao();
+		newUser.setId(user.getId());
 		newUser.setUsername(user.getUsername());
 		newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-		return userRepository.save(newUser);
+		return userRepository.save(newUser).getId();
 	}
 
 	   public Optional<UserDao> findById(long id) {
@@ -53,10 +56,16 @@ public class JwtUserDetailService implements UserDetailsService{
 	        UserDao updatedContact = userRepository.findById(id).orElse(null);
 	        updatedContact.setUsername(userDto.getUsername());
 	        updatedContact.setPassword(passwordEncoder.encode(userDto.getPassword()));
-	     
+	       
 	        return userRepository.save(updatedContact);
 	    }
-	
+	   public String updateToken(long id, UserDto userDto) {
+	        UserDao updatedContact = userRepository.findById(id).orElse(null);
+	  //      updatedContact.setUsername(userDto.getUsername());
+	    //    updatedContact.setPassword(passwordEncoder.encode(userDto.getPassword()));
+	       updatedContact.setJwttoken(jwtAuthenticationController.jwtToken);
+	        return userRepository.save(updatedContact).getJwttoken();
+	    }
 	
 }
 
